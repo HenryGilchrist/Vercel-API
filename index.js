@@ -177,3 +177,5 @@ app.put('/reviews/:idNum', (req, res) => {
         res.status(404).send(error);
     }
 })
+
+export default app;
