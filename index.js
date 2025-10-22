@@ -33,9 +33,9 @@ const reviews = [
   },
   {
     id: 5,
-    review: "Laila explained everything thoroughly, which was much appreciated. However, the options felt limited for our budget and we ended up paying more than we'd have liked to.",
-    name: "Becky & Tom",
-    rating: 3.5
+    review: "We're so happy we chose this company! The team made the experience feel personal and stress-free. They were polite, clear in their explanations, and genuinely helpful when answering our questions.",
+    name: "Max & Elena",
+    rating: 5
   },
   {
     id: 6,
@@ -49,11 +49,11 @@ const reviews = [
     name: "Susan",
     rating: 5
   },
-  {
+    {
     id: 8,
-    review: "We're so happy we chose this company! The team made the experience feel personal and stress-free. They were polite, clear in their explanations, and genuinely helpful when answering our questions.",
-    name: "Max & Elena",
-    rating: 5
+    review: "Laila explained everything thoroughly, which was much appreciated. However, the options felt limited for our budget and we ended up paying more than we'd have liked to.",
+    name: "Becky & Tom",
+    rating: 3.5
   },
   {
     id: 9,
