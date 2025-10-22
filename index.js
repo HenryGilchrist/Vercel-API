@@ -146,6 +146,10 @@ function validatePushNumObj(body){
     return schema.validate(body);
 }
 
+app.get('/reviews/count', (req,res) => {
+    res.status(200).send({length: reviews.length});
+})
+
 app.post('/reviews',(req,res) => {
 
     const { error, value } = validatePostNum(req.body);
