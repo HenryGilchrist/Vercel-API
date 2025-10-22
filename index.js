@@ -1,8 +1,10 @@
 const express = require('express');
 const app = express();
 const Joi = require('joi');
+const cors = require('cors');
 
 app.use(express.json());
+app.use(cors());
 
 const reviews = [
   {
@@ -166,6 +168,4 @@ app.put('/reviews/:idNum', (req, res) => {
     }
 })
 
-export default function handler(req, res) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-}
+export default app;
