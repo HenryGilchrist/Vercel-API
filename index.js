@@ -109,6 +109,11 @@ const reviews = [
   }
 ];
 
+
+app.get('/reviews/count', (req,res) => {
+    res.status(200).send({length: reviews.length});
+})
+
 app.get('/reviews',(req,res) =>
 {
     res.status(200).send(reviews);
@@ -127,28 +132,7 @@ app.get('/reviews/:groupFiveIndex',(req,res) => {
     }
 })
 
-// Joi Schema's
 
-function validatePostNum(body){
-    const schema = Joi.object({
-        number: Joi.number().integer().min(0).max(100).required()
-    })
-
-    return schema.validate(body);
-}
-
-function validatePushNumObj(body){
-    const schema = Joi.object({
-        id: Joi.number().integer().min(1).max(reviews.length).required(),
-        number: Joi.number().integer().min(0).max(100).required()
-    })
-
-    return schema.validate(body);
-}
-
-app.get('/reviews/count', (req,res) => {
-    res.status(200).send({length: reviews.length});
-})
 
 app.post('/reviews',(req,res) => {
 
