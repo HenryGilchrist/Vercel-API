@@ -166,4 +166,6 @@ app.put('/reviews/:idNum', (req, res) => {
     }
 })
 
-export default app;
+export default function handler(req, res) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+}
