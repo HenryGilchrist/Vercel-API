@@ -221,12 +221,14 @@ app.get('/reviews/count', (req,res) => {
 
 app.get('/reviews', (req,res) => {
 
+  let reviewData = reviews;
+
   if(Object.keys(req.query).length == 0){
     return res.status(200).send({success: true, data: reviews, length: reviewData.length});
   }
 
   const { page, limit, sort, order="desc", filter}  = req.query;
-  let reviewData = reviews;
+  
 
   if(filter){
 
