@@ -195,12 +195,18 @@ function createFilterFunctions(filters) {
     
     Object.entries(operations).forEach(([operator, value]) => {
       if (!Object.values(filterOperations).includes(operator)) {
-        console.error("Invalid operator");
         throw new Error(`Invalid operator: ${operator} for property: ${property}`);
       }
 
       if(!valueIsNumber(value)){
-        if(operator != 'eq') throw new Error(`Invalid value of ${value} for ${operator} operation on property ${property}`);
+        const error = `Invalid value of ${value} for ${operator} operation on property ${property}`;
+
+        if(!valueIsDateString(value)){
+          if(operator != 'eq') throw new Error(error);
+        }
+        else{
+          if(!['gte','lte'].includes(operator)) throw new Error(error);
+        }
       }
 
       switch (operator) {
