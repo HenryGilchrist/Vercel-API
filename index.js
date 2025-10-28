@@ -17,7 +17,8 @@ const reviews = [
     name: "Carla & Mateo",
     rating: 5,
     userId: -1,
-    date: new Date('2025-02-15T09:30:00')
+    date: new Date('2025-02-15T09:30:00'),
+    policy: "Joint Life Insurance"
   },
   {
     id: 2,
@@ -25,7 +26,8 @@ const reviews = [
     name: "George",
     rating: 4,
     userId: -1,
-    date: new Date('2025-02-28T14:15:00')
+    date: new Date('2025-02-28T14:15:00'),
+    policy: "Term Insurance"
   },
   {
     id: 3,
@@ -33,7 +35,8 @@ const reviews = [
     name: "Les",
     rating: 5,
     userId: -1,
-    date: new Date('2025-03-10T11:45:00')
+    date: new Date('2025-03-10T11:45:00'),
+    policy: "Term Insurance"
   },
   {
     id: 4,
@@ -41,7 +44,8 @@ const reviews = [
     name: "Mike",
     rating: 3.5,
     userId: -1,
-    date: new Date('2025-03-22T16:20:00')
+    date: new Date('2025-03-22T16:20:00'),
+    policy: "Term Insurance"
   },
   {
     id: 5,
@@ -49,7 +53,8 @@ const reviews = [
     name: "Max & Elena",
     rating: 5,
     userId: -1,
-    date: new Date('2025-04-05T10:00:00')
+    date: new Date('2025-04-05T10:00:00'),
+    policy: "Joint Life Insurance"
   },
   {
     id: 6,
@@ -57,7 +62,8 @@ const reviews = [
     name: "Alexandria",
     rating: 5,
     userId: -1,
-    date: new Date('2025-04-18T13:30:00')
+    date: new Date('2025-04-18T13:30:00'),
+    policy: "Term Insurance"
   },
   {
     id: 7,
@@ -65,7 +71,8 @@ const reviews = [
     name: "Susan",
     rating: 5,
     userId: -1,
-    date: new Date('2025-05-02T15:45:00')
+    date: new Date('2025-05-02T15:45:00'),
+    policy: "Term Insurance"
   },
   {
     id: 8,
@@ -73,7 +80,8 @@ const reviews = [
     name: "Becky & Tom",
     rating: 3.5,
     userId: -1,
-    date: new Date('2025-05-14T09:15:00')
+    date: new Date('2025-05-14T09:15:00'),
+    policy: "Joint Life Insurance"
   },
   {
     id: 9,
@@ -81,7 +89,8 @@ const reviews = [
     name: "Samuel",
     rating: 4,
     userId: -1,
-    date: new Date('2025-06-07T12:00:00')
+    date: new Date('2025-06-07T12:00:00'),
+    policy: "Term Insurance"
   },
   {
     id: 10,
@@ -89,7 +98,8 @@ const reviews = [
     name: "Richard",
     rating: 5,
     userId: -1,
-    date: new Date('2025-06-28T14:50:00')
+    date: new Date('2025-06-28T14:50:00'),
+    policy: "Term Insurance"
   },
   {
     id: 11,
@@ -97,7 +107,8 @@ const reviews = [
     name: "Rohan & Anika",
     rating: 4.5,
     userId: -1,
-    date: new Date('2025-07-15T11:10:00')
+    date: new Date('2025-07-15T11:10:00'),
+    policy: "Joint Life Insurance"
   },
   {
     id: 12,
@@ -105,7 +116,8 @@ const reviews = [
     name: "Laura",
     rating: 5,
     userId: -1,
-    date: new Date('2025-08-03T16:40:00')
+    date: new Date('2025-08-03T16:40:00'),
+    policy: "Term Insurance"
   },
   {
     id: 13,
@@ -113,7 +125,8 @@ const reviews = [
     name: "Asha",
     rating: 4,
     userId: -1,
-    date: new Date('2025-08-26T10:25:00')
+    date: new Date('2025-08-26T10:25:00'),
+    policy: "Term Insurance"
   },
   {
     id: 14,
@@ -121,7 +134,8 @@ const reviews = [
     name: "John",
     rating: 4.5,
     userId: -1,
-    date: new Date('2025-09-19T13:15:00')
+    date: new Date('2025-09-19T13:15:00'),
+    policy: "Term Insurance"
   },
   {
     id: 15,
@@ -129,7 +143,8 @@ const reviews = [
     name: "Sylvia",
     rating: 5,
     userId: -1,
-    date: new Date('2025-10-11T05:30:00')
+    date: new Date('2025-10-11T05:30:00'),
+    policy: "Term Insurance"
   },
   {
     id: 16,
@@ -137,7 +152,8 @@ const reviews = [
     name: "Michael",
     rating: 4.5,
     userId: -1,
-    date: new Date('2025-10-18T09:50:00')
+    date: new Date('2025-10-18T09:50:00'),
+    policy: "Term Insurance"
   },
   {
     id: 17,
@@ -145,7 +161,8 @@ const reviews = [
     name: "Lila",
     rating: 5,
     userId: -1,
-    date: new Date('2025-10-26T12:45:00')
+    date: new Date('2025-10-26T12:45:00'),
+    policy: "Term Insurance"
   }
 ];
 
@@ -162,6 +179,11 @@ const filterOperations = {
 }
 
 const valueIsNumber = (value) => !isNaN(parseFloat(value));
+
+function valueIsDateString(value) {
+    const time = Date.parse(value);
+    return !isNaN(time);
+}
 
 function createFilterFunctions(filters) {
   const filterFunctions = [];
@@ -182,17 +204,27 @@ function createFilterFunctions(filters) {
       }
 
       switch (operator) {
-        case 'gt':
+        case 'gt': 
           filterFunctions.push(item => item[property] > parseFloat(value));
           break;
         case 'lt':
           filterFunctions.push(item => item[property] < parseFloat(value));
           break;
         case 'gte':
-          filterFunctions.push(item => item[property] >= parseFloat(value));
+          if(valueIsDateString(value)){
+            filterFunctions.push(item => item[property] >= new Date(value));
+          }
+          else{
+            filterFunctions.push(item => item[property] >= parseFloat(value));
+          }
           break;
         case 'lte':
-          filterFunctions.push(item => item[property] <= parseFloat(value));
+          if(valueIsDateString(value)){
+            filterFunctions.push(item => item[property] <= new Date(value));
+          }
+          else{
+            filterFunctions.push(item => item[property] <= parseFloat(value));
+          }
           break;
         case 'eq':
           const valueArr = Array.isArray(value) ? value : [value];
