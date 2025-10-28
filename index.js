@@ -260,12 +260,12 @@ app.get('/reviews', (req,res) => {
     }
   }
 
-  const pageNum = parseInt(page);
-  const pageLimit = parseInt(limit);
-
-  if(pageNum == null && pageLimit == null){
+  if(page == null && limit == null){
     return res.status(200).send({success: true,length: reviewData.length, data: reviewData});
   }
+
+  const pageNum = parseInt(page);
+  const pageLimit = parseInt(limit);
 
   if(Number.isNaN(pageNum) || Number.isNaN(pageLimit)){
     return res.status(400).send({success: false, message: "Page number and limit must be numeric", page: page, limit: limit});
