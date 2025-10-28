@@ -172,7 +172,7 @@ function createFilterFunctions(filters) {
         throw new Error(`Invalid operator: ${operator} for property: ${property}`);
       }
 
-      if(isNan(parseFloat(value))){
+      if(isNaN(parseFloat(value))){
         if(operator != 'eq') throw new Error(`Invalid value of ${value} for ${operator} operation on property ${property}`);
       }
 
@@ -250,7 +250,7 @@ app.get('/reviews', (req,res) => {
       res.status(400).send({success: false, message: "Can only sort by a single property", sort: sort});
     }
 
-    if(reviewKeys.includes(sort)){
+    if(reviewProperties.includes(sort)){
       let orderList = ["asc", "desc"];
       let orderChoice = orderList.indexOf(order);
       if(orderChoice == -1){
@@ -293,6 +293,7 @@ app.get('/reviews', (req,res) => {
 
 
 app.post('/reviews',(req,res) => {
+  /*
 
     const { error, value } = validatePostNum(req.body);
 
@@ -322,6 +323,7 @@ app.put('/reviews/:idNum', (req, res) => {
     else{
         res.status(404).send(error);
     }
+        */
 })
 
 export default app;
