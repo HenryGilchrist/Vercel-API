@@ -203,7 +203,7 @@ function createFilterFunctions(filters) {
                 return parseFloat(item[property]) === parseFloat(v);
               }
 
-              return String(item[property]) === String(v);
+              return String(item[property]).toUpperCase() === String(v).toUpperCase();
             });
           });
           break;
