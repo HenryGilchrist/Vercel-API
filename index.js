@@ -195,7 +195,7 @@ function createFilterFunctions(filters) {
           filterFunctions.push(item => item[property] <= parseFloat(value));
           break;
         case 'eq':
-          const valueArr = Array.isArray(vale) ? value : [value];
+          const valueArr = Array.isArray(value) ? value : [value];
 
           filterFunctions.push(item => {
             return valueArr.some(v => {
