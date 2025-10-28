@@ -240,20 +240,16 @@ app.get('/reviews', (req,res) => {
     if(typeof filter !== 'object' && !Array.isArray(filter)){
       return res.status(400).send({success: false, message: "Must provide filter object: filter[property][operation]=value", filter: filter, reviewProperties: reviewProperties, filterOperations: filterOperations});
     }
-    
+
     try{
       const filterFunctions = createFilterFunctions(filter);
       reviewData = reviewData.filter(item => 
         filterFunctions.every(filterFn => filterFn(item))
       );
-      console.error("Filter Passed through");
     }
     catch(error){
       return res.status(400).send({success: false, message: error.message, filter: filter, reviewProperties: reviewProperties, filterOperations: filterOperations});
     }
-  }
-  else{
-    return res.status(400).send({message: "doesn't exist", filter: filter});
   }
 
   if(sort){
