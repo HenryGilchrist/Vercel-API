@@ -145,7 +145,7 @@ const reviews = [
   }
 ];
 
-const reviewProperties = Object.keys(reviews);
+const reviewProperties = ["id","review","name","rating","userId","date"];
 
 let reviewIdCounter = 17;
 
@@ -168,7 +168,7 @@ function createFilterFunctions(filters) {
     }
     
     Object.entries(operations).forEach(([operator, value]) => {
-      if (!filterOperations.includes(operator)) {
+      if (!Object.values(filterOperations).includes(operator)) {
         throw new Error(`Invalid operator: ${operator} for property: ${property}`);
       }
 
@@ -285,7 +285,7 @@ app.get('/reviews', (req,res) => {
 
   const pageStartIndex = (pageNum - 1) * pageLimit;
   
-  if(pageStartIndex > reviews.length - 1){
+  if(pageStartIndex > reviewData.length - 1){
     return res.status(404).send({success: false, message: `Page ${pageNum} does not exist with page size ${pageLimit}`});
   }
 
