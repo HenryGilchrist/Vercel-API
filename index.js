@@ -240,9 +240,7 @@ app.get('/reviews', (req,res) => {
     if(typeof filter !== 'object' && !Array.isArray(filter)){
       return res.status(400).send({success: false, message: "Must provide filter object: filter[property][operation]=value", filter: filter, reviewProperties: reviewProperties, filterOperations: filterOperations});
     }
-
-    return res.status(400).send({message: "exists", filter: filter});
-
+    
     try{
       const filterFunctions = createFilterFunctions(filter);
       reviewData = reviewData.filter(item => 
