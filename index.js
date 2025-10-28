@@ -220,18 +220,23 @@ app.get('/reviews/count', (req,res) => {
 })
 
 app.get('/reviews', (req,res) => {
+
+  if(Object.keys(req.query).length == 0){
+    return res.status(200).send({success: true, data: reviews, length: reviewData.length});
+  }
+
   const { page, limit, sort, order="desc", filter}  = req.query;
   let reviewData = reviews;
 
   if(filter){
 
-    if(typeof filter !== 'object' || !Array.isArray(filter)){
+    if(typeof filter !== 'object' && !Array.isArray(filter)){
       return res.status(400).send({success: false, message: "Must provide filter object: filter[property][operation]=value", filter: filter, reviewProperties: reviewProperties, filterOperations: filterOperations});
     }
 
     try{
       const filterFunctions = createFilterFunctions(filter);
-      reviewData = products.filter(item => 
+      reviewData = reviews.filter(item => 
         filterFunctions.every(filterFn => filterFn(item))
       );
     }
