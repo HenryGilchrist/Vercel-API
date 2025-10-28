@@ -177,7 +177,7 @@ function createFilterFunctions(filters) {
         throw new Error(`Invalid operator: ${operator} for property: ${property}`);
       }
 
-      if(!valueIsNumber){
+      if(!valueIsNumber(value)){
         if(operator != 'eq') throw new Error(`Invalid value of ${value} for ${operator} operation on property ${property}`);
       }
 
