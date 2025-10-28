@@ -177,7 +177,7 @@ function createFilterFunctions(filters) {
         throw new Error(`Invalid operator: ${operator} for property: ${property}`);
       }
 
-      if(isNaN(parseFloat(value))){
+      if(!valueIsNumber){
         if(operator != 'eq') throw new Error(`Invalid value of ${value} for ${operator} operation on property ${property}`);
       }
 
@@ -195,12 +195,17 @@ function createFilterFunctions(filters) {
           filterFunctions.push(item => item[property] <= parseFloat(value));
           break;
         case 'eq':
-          if (valueIsNumber(value)){
-            filterFunctions.push(item => item[property] === parseFloat(value));
-          }
-          else{
-            filterFunctions.push(item => item[property] === value);
-          }
+          const valueArr = Array.isArray ? value : [value];
+
+          filterFunctions.push(item => {
+            return valueArr.some(v => {
+              if (valueIsNumber(v) && valueIsNumber(item[property])) {
+                return parseFloat(item[property]) === parseFloat(v);
+              }
+              
+              return String(item[property]) === String(v);
+            });
+          });
           break;
       }
     });
