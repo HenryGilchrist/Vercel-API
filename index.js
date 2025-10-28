@@ -2,9 +2,13 @@ const express = require('express');
 const app = express();
 const Joi = require('joi');
 const cors = require('cors');
+const qs = require('qs');
+
+
 
 app.use(express.json());
 app.use(cors());
+app.set("query parser", str => qs.parse(str));
 
 const reviews = [
   {
