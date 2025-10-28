@@ -164,11 +164,13 @@ function createFilterFunctions(filters) {
   
   Object.entries(filters).forEach(([property, operations]) => {
     if (!reviewProperties.includes(property)) {
+      console.log("Invalid propery field");
        throw new Error(`Invalid field: ${property} for review`);
     }
     
     Object.entries(operations).forEach(([operator, value]) => {
       if (!Object.values(filterOperations).includes(operator)) {
+        console.log("Invalid operator");
         throw new Error(`Invalid operator: ${operator} for property: ${property}`);
       }
 
@@ -221,7 +223,7 @@ app.get('/reviews/count', (req,res) => {
 
 app.get('/reviews', (req,res) => {
 
-  let reviewData = reviews;
+  let reviewData = [...reviews];
 
   if(Object.keys(req.query).length == 0){
     return res.status(200).send({success: true, data: reviews, length: reviewData.length});
@@ -238,7 +240,7 @@ app.get('/reviews', (req,res) => {
 
     try{
       const filterFunctions = createFilterFunctions(filter);
-      reviewData = reviews.filter(item => 
+      reviewData = reviewData.filter(item => 
         filterFunctions.every(filterFn => filterFn(item))
       );
     }
