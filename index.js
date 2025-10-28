@@ -243,6 +243,7 @@ app.get('/reviews', (req,res) => {
       reviewData = reviewData.filter(item => 
         filterFunctions.every(filterFn => filterFn(item))
       );
+      console.log("Filter Passed through");
     }
     catch(error){
       return res.status(400).send({success: false, message: error.message, filter: filter, reviewProperties: reviewProperties, filterOperations: filterOperations});
