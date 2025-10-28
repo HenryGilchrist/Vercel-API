@@ -195,14 +195,14 @@ function createFilterFunctions(filters) {
           filterFunctions.push(item => item[property] <= parseFloat(value));
           break;
         case 'eq':
-          const valueArr = Array.isArray ? value : [value];
+          const valueArr = Array.isArray(vale) ? value : [value];
 
           filterFunctions.push(item => {
             return valueArr.some(v => {
               if (valueIsNumber(v) && valueIsNumber(item[property])) {
                 return parseFloat(item[property]) === parseFloat(v);
               }
-              
+
               return String(item[property]) === String(v);
             });
           });
