@@ -198,7 +198,7 @@ function createFilterFunctions(filters) {
         throw new Error(`Invalid operator: ${operator} for property: ${property}`);
       }
 
-      if(!valueIsNumber(value)){
+      if(!valueIsNumber(value) || valueIsDateString(value)){
         const error = `Invalid value of ${value} for ${operator} operation on property ${property}`;
 
         if(!valueIsDateString(value)){
