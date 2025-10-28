@@ -237,7 +237,7 @@ app.get('/reviews', (req,res) => {
       return res.status(400).send({success: false, message: "Must provide filter object: filter[property][operation]=value", filter: filter, reviewProperties: reviewProperties, filterOperations: filterOperations});
     }
 
-    return res.status(400).send({filter: filter});
+    return res.status(400).send({message: "exists", filter: filter});
 
     try{
       const filterFunctions = createFilterFunctions(filter);
@@ -249,6 +249,9 @@ app.get('/reviews', (req,res) => {
     catch(error){
       return res.status(400).send({success: false, message: error.message, filter: filter, reviewProperties: reviewProperties, filterOperations: filterOperations});
     }
+  }
+  else{
+    return res.status(400).send({message: "doesn't exist", filter: filter});
   }
 
   if(sort){
