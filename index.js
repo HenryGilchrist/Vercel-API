@@ -263,7 +263,12 @@ function sortResourceAsc(data, propertyName){
 }
 
 function sortResourceDesc(data, propertyName){
-  if (propertyTypeString) return data.sort((a,b) => b[propertyName].localeCompare(a[propertyName]));
+  if(data.length == 0) return data;
+  
+  const firstValue = data[0][propertyName];
+  const isString = typeof firstValue === 'string';
+
+  if (isString) return data.sort((a,b) => b[propertyName].localeCompare(a[propertyName]));
   else return data.sort((a,b) => b[propertyName] - a[propertyName]);
 }
 
