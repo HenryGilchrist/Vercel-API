@@ -344,7 +344,9 @@ app.get('/reviews', (req,res) => {
   const pageStartIndex = (pageNum - 1) * pageLimit;
   
   if(pageStartIndex > reviewData.length - 1){
-    return res.status(404).send({success: false, message: `Page ${pageNum} does not exist with page size ${pageLimit}`});
+    const message = pageStartIndex == 0 ? "No reviews match the applied filters" : `Page ${pageNum} does not exist with page size ${pageLimit}`;
+    
+    return res.status(404).send({success: false, message: message, data: [], length: 0});
   }
 
   return res.status(200).send({success: true, length: reviewData.length, data: reviewData.slice(pageStartIndex, pageStartIndex + pageLimit), message: `Returning page ${pageNum} of limit ${pageLimit}`});
