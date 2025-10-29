@@ -166,7 +166,7 @@ const reviews = [
   }
 ];
 
-const reviewProperties = ["id","review","name","rating","userId","date"];
+const reviewProperties = ["id","review","name","rating","userId","date", "policy"];
 
 let reviewIdCounter = 17;
 
