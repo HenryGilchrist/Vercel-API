@@ -181,8 +181,8 @@ const filterOperations = {
 const valueIsNumber = (value) => !isNaN(parseFloat(value));
 
 function valueIsDateString(value) {
-    const time = Date.parse(value);
-    return !isNaN(time);
+  const regex = /^\d{4}-\d{2}-\d{2}$/;
+  if (!regex.test(dateString)) return false;
 }
 
 function createFilterFunctions(filters) {
