@@ -252,12 +252,17 @@ function createFilterFunctions(filters) {
   return filterFunctions;
 }
 
-function sortResourceAsc(data, propertyName, propertyTypeString){
-  if (propertyTypeString) return data.sort((a,b) => a[propertyName].localeCompare(b[propertyName]));
+function sortResourceAsc(data, propertyName){
+  if(data.length == 0) return data;
+  
+  const firstValue = data[0][propertyName];
+  const isString = typeof firstValue === 'string';
+
+  if (isString) return data.sort((a,b) => a[propertyName].localeCompare(b[propertyName]));
   else return data.sort((a,b) => a[propertyName] - b[propertyName]);
 }
 
-function sortResourceDesc(data, propertyName, propertyTypeString){
+function sortResourceDesc(data, propertyName){
   if (propertyTypeString) return data.sort((a,b) => b[propertyName].localeCompare(a[propertyName]));
   else return data.sort((a,b) => b[propertyName] - a[propertyName]);
 }
