@@ -410,7 +410,7 @@ const postSchema = Joi.object({
 
 
 app.post('/reviews',(req,res) => {
-    const { error, value } = postSchema(req.body);
+    const { error, value } = postSchema.validate(req.body);
 
     if (!error){
         reviewIdCounter++;
@@ -418,7 +418,7 @@ app.post('/reviews',(req,res) => {
         return res.status(200).send({success: true});
     }
     else{
-      return res.status(400).send({success: false, message: error});
+      return res.status(400).send({success: false, message: error.details.map(d => d.message)});
     }  
 })
 
@@ -426,4 +426,4 @@ function findEntryIndex(id){
     return reviews.findIndex((e) => e.id == id);
 }
 
-export default app;
+//export default app;
