@@ -345,27 +345,81 @@ app.get('/reviews', (req,res) => {
   
   if(pageStartIndex > reviewData.length - 1){
     const message = pageStartIndex == 0 ? "No reviews match the applied filters" : `Page ${pageNum} does not exist with page size ${pageLimit}`;
-    
+
     return res.status(404).send({success: false, message: message, data: [], length: 0});
   }
 
   return res.status(200).send({success: true, length: reviewData.length, data: reviewData.slice(pageStartIndex, pageStartIndex + pageLimit), message: `Returning page ${pageNum} of limit ${pageLimit}`});
 })
 
+// Joi Schema:
+
+const firstCharLetterRegex = /^[A-Za-z][A-Za-z\s]*$/;
+const allowedCharsRegex = /^[A-Za-z&+'.]*$/;
+
+const postSchema = Joi.object({
+
+  name: Joi.string()
+    .required()
+    .min(3)
+    .max(20)
+    .pattern(firstCharLetterRegex, { name: 'startsWithLetter' })
+    .pattern(allowedCharsRegex, { name: 'allowedCharacters' })
+    .messages({
+      'startsWithLetter': "Name must start with a letter",
+      'allowedCharacters': "Can only use special characters: [&, +, ' and .]"
+    }),
+
+  userID: Joi.number()
+    .required()
+    .integer()
+    .min(1),
+
+  reviewText: Joi.string()
+    .required()
+    .min(4)
+    .max(300)
+    .pattern(firstCharLetterRegex),
+
+  rating: Joi.number()
+    .required()
+    .min(0.5)
+    .max(5)
+    .custom((value, helpers) => {
+      const decimalPart = value - Math.floor(value);
+
+      if (decimalPart !== 0 && decimalPart !== 0.5) {
+        return helpers.error('invalidDecimal');
+      }
+
+      return val;
+    })
+    .messages({
+      'invalidDecimal': "rating must be a whole number or end with .5"
+    }),
+    
+
+  policy: Joi.string()
+    .valid('Term Insurance', 'Joint Life Insurance', 'Serious Illness Cover')
+    .required(),
+
+}).unknown(false);
+
+
 
 
 
 app.post('/reviews',(req,res) => {
-  /*
 
-    const { error, value } = validatePostNum(req.body);
+    const { error, value } = postSchema(req.body);
 
     if (!error){
-        reviews.push({id: reviews.length+1, number: value.number});
-        res.status(200).send(`Number ${value.number} added to database`);
+        reviewIdCounter++;
+        reviews.push({id: reviewIdCounter, ...value});
+        res.status(200).send({success: true});
     }
     else{
-        res.status(418).send(error);
+        res.status(400).send({success: false, message: error});
     }
 })
 
