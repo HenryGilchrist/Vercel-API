@@ -392,7 +392,7 @@ const postSchema = Joi.object({
         return helpers.error('invalidDecimal');
       }
 
-      return val;
+      return value;
     })
     .messages({
       'invalidDecimal': "rating must be a whole number or end with .5"
@@ -426,4 +426,4 @@ function findEntryIndex(id){
     return reviews.findIndex((e) => e.id == id);
 }
 
-//export default app;
+export default app;
