@@ -410,17 +410,17 @@ const postSchema = Joi.object({
 
 
 app.post('/reviews',(req,res) => {
-
     const { error, value } = postSchema(req.body);
 
     if (!error){
         reviewIdCounter++;
         reviews.push({id: reviewIdCounter, ...value});
-        res.status(200).send({success: true});
+        return res.status(200).send({success: true});
     }
     else{
-        res.status(400).send({success: false, message: error});
+      return res.status(400).send({success: false, message: error});
     }
+        
 })
 
 function findEntryIndex(id){
