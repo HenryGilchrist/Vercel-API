@@ -375,7 +375,7 @@ const postSchema = Joi.object({
     .integer()
     .min(1),
 
-  reviewText: Joi.string()
+  review: Joi.string()
     .required()
     .min(4)
     .max(300)
