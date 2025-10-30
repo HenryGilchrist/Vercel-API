@@ -427,20 +427,4 @@ function findEntryIndex(id){
     return reviews.findIndex((e) => e.id == id);
 }
 
-app.put('/reviews/:idNum', (req, res) => {
-    const { error, value } = validatePushNumObj({id: parseInt(req.params.idNum), number: req.body.number});
-
-    if(!error){
-        const entryIndex = findEntryIndex(value.id);
-        if (entryIndex == -1) return res.status(404).send(`No Entry of ID ${value.id} exists!`);
-
-        reviews.splice(entryIndex, 1, value);
-        res.status(200).send(`Entry ${value.id}'s number has been updated!`);
-    }
-    else{
-        res.status(404).send(error);
-    }
-        */
-})
-
  export default app;
