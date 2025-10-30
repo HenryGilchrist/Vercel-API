@@ -426,4 +426,4 @@ function findEntryIndex(id){
     return reviews.findIndex((e) => e.id == id);
 }
 
-export default app;
+module.exports = { app };
