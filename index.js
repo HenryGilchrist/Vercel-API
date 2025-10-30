@@ -1,8 +1,9 @@
-const express = require('express');
+import express from 'express';
+import cors from 'cors';
+import Joi from 'joi';
+import qs from 'qs';
+
 const app = express();
-const Joi = require('joi');
-const cors = require('cors');
-const qs = require('qs');
 
 
 
