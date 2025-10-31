@@ -413,6 +413,7 @@ const postSchema = Joi.object({
 
   policy: Joi.string()
     .valid('Term Insurance', 'Joint Life Insurance', 'Serious Illness Cover')
+    .label("Policy Type")
     .required(),
 
 }).unknown(false);
