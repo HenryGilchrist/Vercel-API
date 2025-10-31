@@ -355,35 +355,46 @@ app.get('/reviews', (req,res) => {
 
 // Joi Schema:
 
-const firstCharLetterRegex = /^[A-Za-z][A-Za-z\s]*$/;
+const firstCharLetterRegex = /^[A-Za-z]/;
 const allowedCharsRegex = /^[A-Za-z&+'.]*$/;
+
+function firstCharLetterSchema(propertyName, valueRangeObj = {}){
+    let schema = Joi.string();
+
+    if(Object.keys(valueRangeObj).length > 0){
+        schema = schema.ruleset;
+        
+        if(Number.isInteger(valueRangeObj.min)){
+            schema = schema.min(valueRangeObj.min)
+        }
+
+        if(Number.isInteger(valueRangeObj.max)){
+            schema = schema.max(valueRangeObj.max)
+        }
+
+        schema = schema.message(`${propertyName} must be ${valueRangeObj.max == undefined ? `at least ${valueRangeObj.min}` : `between ${valueRangeObj.min || 1} and ${valueRangeObj.max}`} characters`)
+    }
+    return schema;
+}
 
 const postSchema = Joi.object({
 
-  name: Joi.string()
+  name: firstCharLetterSchema("Name", {min: 3, max: 25})
     .required()
-    .min(3)
-    .max(20)
-    .pattern(firstCharLetterRegex, { name: 'startsWithLetter' })
-    .pattern(allowedCharsRegex, { name: 'allowedCharacters' })
-    .messages({
-      'startsWithLetter': "Name must start with a letter",
-      'allowedCharacters': "Can only use special characters: [&, +, ' and .]"
-    }),
+    .pattern(allowedCharsRegex)
+    .message("Can only use special characters: [&, +, ' and .]"),
 
   userID: Joi.number()
     .required()
     .integer()
     .min(1),
 
-  review: Joi.string()
-    .required()
-    .min(4)
-    .max(300)
-    .pattern(firstCharLetterRegex),
+  review: firstCharLetterSchema("Review", {min: 4, max: 300})
+    .required(),
 
   rating: Joi.number()
     .required()
+    .label("Rating")
     .min(0.5)
     .max(5)
     .custom((value, helpers) => {
@@ -396,7 +407,7 @@ const postSchema = Joi.object({
       return value;
     })
     .messages({
-      'invalidDecimal': "rating must be a whole number or end with .5"
+      'invalidDecimal': "Rating must be a whole number or end with .5"
     }),
     
 
@@ -416,7 +427,7 @@ app.post('/reviews',(req,res) => {
     if (!error){
         reviewIdCounter++;
         reviews.push({id: reviewIdCounter, ...value});
-        return res.status(200).send({success: true});
+        return res.status(200).send({success: true, data: reviews});
     }
     else{
       return res.status(400).send({success: false, message: error.details.map(d => d.message)});
