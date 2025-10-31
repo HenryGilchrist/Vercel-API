@@ -422,7 +422,7 @@ const postSchema = Joi.object({
 
 
 app.post('/reviews',(req,res) => {
-    const { error, value } = postSchema.validate(req.body);
+    const { error, value } = postSchema.validate(req.body, {abortEarly: false});
 
     if (!error){
         reviewIdCounter++;
