@@ -382,7 +382,7 @@ const postSchema = Joi.object({
   name: firstCharLetterSchema("Name", {min: 3, max: 25})
     .required()
     .pattern(allowedCharsRegex)
-    .message("Can only use special characters: [&, +, ' and .]"),
+    .message("Name can only contain special characters: [&, +, ' and .]"),
 
   userID: Joi.number()
     .required()
